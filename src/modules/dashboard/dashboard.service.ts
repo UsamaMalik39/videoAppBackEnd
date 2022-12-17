@@ -31,9 +31,16 @@ export class DashboardService {
     }
 
     async addNewComment(formData,req){
-        let result= await this.db.selectSingle('call sp_add_new_comment_to_video(?)',[[formData.videoID,formData.comment,req.user.id]],true)
+        let result= await this.db.selectSingle('call sp_admin_add_new_comment(?)',[[formData.comment,req.user.id,formData.videoID]],true)
         if(result.newComment)
             result.newComment=JSON.parse(result.newComment)
+        return result.newComment
+    }
+
+    async getMyVideos(req){
+        let result= await this.db.select('call sp_get_my_videos(?)',[req.user.id],true)
+        if(result.length)
+            result=JSON.parse(result[0].videosData)
         return result
     }
 

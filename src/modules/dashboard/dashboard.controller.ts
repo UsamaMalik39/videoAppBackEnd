@@ -34,6 +34,10 @@ export class DashboardController {
     async getGenreList( @Req() request: Request){
        return await this._dashboardService.getGenreList(request)
     }
+    @Get("get-my-videos")
+    async getMyVideos( @Req() request: Request){
+       return await this._dashboardService.getMyVideos(request)
+    }
 
     @Post("add-new-comment")
     async addNewComment(@Body() formData:newCommentDTO, @Req() request: Request){
